@@ -20,11 +20,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private DataSource dataSource;
 
-    @Autowired
-    public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
+    @Override
+    public void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.jdbcAuthentication()
                 .dataSource(dataSource)
-                .withDefaultSchema()
+                .withDefaultSchema() // this creates 2 tables: users & authorities
                 .withUser(User.withUsername("marcus-chiu")
                         .password(passwordEncoder().encode("password"))
                         .roles("USER", "ADMIN"))
