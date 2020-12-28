@@ -22,9 +22,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     public void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.jdbcAuthentication()
-                .dataSource(dataSource)
+        auth.jdbcAuthentication().dataSource(dataSource)
+
+                // use either withDefaultSchema() or using schema form resources/data.sql
                 .withDefaultSchema() // this creates 2 tables: users & authorities
+
+                // add users with roles
                 .withUser(User.withUsername("marcus-chiu")
                         .password(passwordEncoder().encode("password"))
                         .roles("USER", "ADMIN"))
